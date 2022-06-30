@@ -26,6 +26,7 @@ import br.com.livrariaapi.repositories.IClienteRepository;
 import br.com.livrariaapi.repositories.IFuncionarioRepository;
 import br.com.livrariaapi.repositories.ILivroRepository;
 import br.com.livrariaapi.repositories.IVendaRepository;
+import br.com.livrariaapi.requests.LivroPostRequest;
 import br.com.livrariaapi.requests.VendaPostRequest;
 import io.swagger.annotations.ApiOperation;
 
@@ -46,32 +47,62 @@ public class VendaController {
 	
 	
 	@ApiOperation("metodo para cadastro da venda")
-	@RequestMapping(value = ENDPOINT +"{idCliente}" + "&" + "{idFuncionario}" +"&" + "{idLivro}",method = RequestMethod.POST)
-	public ResponseEntity<String> post(@RequestBody VendaPostRequest request,@PathVariable("idCliente") Long idCliente,@PathVariable("idFuncionario") Long idFuncionario,@PathVariable("idLivro") Long idLivro ){
+	@RequestMapping(value = ENDPOINT,method = RequestMethod.POST)
+	public ResponseEntity<String> post(@RequestBody VendaPostRequest request){
 		try {
-			Optional<Cliente> consultCliente = clienteRepository.findById(idCliente);
-			Optional<Funcionario> consultFuncionario = funcionarioRepository.findById(idFuncionario);
-			Optional<Livro> consultLivro = livroRepository.findById(idLivro);
+//			Optional<Cliente> consultCliente = clienteRepository.findById(idCliente);
+//			Optional<Funcionario> consultFuncionario = funcionarioRepository.findById(idFuncionario);
+//			Optional<Livro> consultLivro = livroRepository.findById(idLivro);
+//			
+//			
+//			if(consultCliente.isEmpty())
+//				throw new IllegalArgumentException("nao foi possivel encontrar o cliente");
+//			
+//			if(consultFuncionario.isEmpty())
+//				throw new IllegalArgumentException("nao foi possivel Encontrar o Funcionario");
+//			
+//			if(consultLivro.isEmpty())
+//				throw new IllegalArgumentException("nao foi possivel encontrar o Livro");
+//			
 			
-			
-			if(consultCliente.isEmpty())
+//			Cliente cliente = consultCliente.get();
+//			Funcionario funcionario = consultFuncionario.get();
+//			Livro livro = consultLivro.get();
+//			
+			if(request.getClientePostRequest() == null)
 				throw new IllegalArgumentException("nao foi possivel encontrar o cliente");
 			
-			if(consultFuncionario.isEmpty())
+			if(request.getFuncionarioPostRequest() == null)
 				throw new IllegalArgumentException("nao foi possivel Encontrar o Funcionario");
 			
-			if(consultLivro.isEmpty())
+			if(request.getListLivro().isEmpty())
 				throw new IllegalArgumentException("nao foi possivel encontrar o Livro");
 			
 			
-			Cliente cliente = consultCliente.get();
-			Funcionario funcionario = consultFuncionario.get();
-			Livro livro = consultLivro.get();
 			
 			List<Livro> livros = new ArrayList<Livro>();
 			
-			livros.add(livro);
+			Livro livro1;
+			for(LivroPostRequest livro : request.getListLivro()) {
+			livro1 = new Livro();
+			livro1.setAutor(livro.getAutor());
+			livro1.setIdLivro(livro.getIdLivro());
+			livro1.setNome(livro.getNome());
+			livro1.setPreco(livro.getPreco());
+			livros.add(livro1);
+			}
 			
+		Cliente cliente = new Cliente();
+		cliente.setCpf(request.getClientePostRequest().getCpf());
+		cliente.setEmail(request.getClientePostRequest().getEmail());
+		cliente.setNome(request.getClientePostRequest().getNome());
+		cliente.setIdCliente(request.getClientePostRequest().getIdCliente());
+			
+		Funcionario funcionario = new Funcionario();
+		funcionario.setCpf(request.getFuncionarioPostRequest().getCpf());
+		funcionario.setEmail(request.getFuncionarioPostRequest().getEmail());
+		funcionario.setNome(request.getFuncionarioPostRequest().getNome());
+		funcionario.setIdFuncionario(request.getFuncionarioPostRequest().getIdFuncionario());
 			
 			Date dataHora = new SimpleDateFormat("dd/MM/yyyy-HH:mm").parse(request.getData() + "-" + request.getHora());
 			

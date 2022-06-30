@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString
 public class FuncionarioPostRequest {
 
+	private long idFuncionario;
 	private String nome;
 	private String email;
 	private String cpf;
