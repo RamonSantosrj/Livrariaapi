@@ -42,9 +42,9 @@ public class FuncionarioController {
 			}
 
 			Funcionario funcionario = new Funcionario();
-			funcionario.setNome(request.getNome());
-			funcionario.setEmail(request.getEmail());
-			funcionario.setCpf(request.getCpf());
+			funcionario.setNome(request.getNome().trim());
+			funcionario.setEmail(request.getEmail().trim());
+			funcionario.setCpf(request.getCpf().trim());
 	
 
 			funcionarioRepository.save(funcionario);
@@ -70,9 +70,9 @@ public class FuncionarioController {
 
 			Funcionario funcionario = new Funcionario();
 			funcionario.setIdFuncionario(request.getIdFuncionario());
-			funcionario.setNome(request.getNome());
-			funcionario.setEmail(request.getEmail());
-			funcionario.setCpf(request.getCpf());
+			funcionario.setNome(request.getNome().trim());
+			funcionario.setEmail(request.getEmail().trim());
+			funcionario.setCpf(request.getCpf().trim());
 			funcionarioRepository.save(funcionario);
 
 			return ResponseEntity.status(HttpStatus.CREATED).body("Funcionario atualizado com sucesso!");

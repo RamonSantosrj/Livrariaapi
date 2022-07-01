@@ -11,11 +11,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class FuncionarioPostRequest {
+public class ClienteVendaPostRequest {
 
-	
+	private long idCliente;
 	private String nome;
 	private String email;
 	private String cpf;
-
 }

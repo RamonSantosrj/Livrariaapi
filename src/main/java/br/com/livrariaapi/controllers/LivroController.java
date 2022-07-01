@@ -41,8 +41,8 @@ public class LivroController {
 
 			Livro livro = new Livro();
 
-			livro.setNome(request.getNome());
-			livro.setAutor(request.getAutor());
+			livro.setNome(request.getNome().trim());
+			livro.setAutor(request.getAutor().trim());
 			livro.setPreco(request.getPreco());
 
 			livroRepository.save(livro);

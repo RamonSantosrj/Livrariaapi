@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class LivroPostRequest {
 
-	private long idLivro;
+
 	private String nome;
 	private String autor;
 	private Double Preco;

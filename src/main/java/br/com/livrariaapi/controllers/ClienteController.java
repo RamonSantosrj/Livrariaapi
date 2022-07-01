@@ -44,9 +44,9 @@ public class ClienteController {
 			}
 
 			Cliente cliente = new Cliente();
-			cliente.setNome(request.getNome());
-			cliente.setEmail(request.getEmail());
-			cliente.setCpf(request.getCpf());
+			cliente.setNome(request.getNome().trim());
+			cliente.setEmail(request.getEmail().trim());
+			cliente.setCpf(request.getCpf().trim());
 		
 
 			clienteRepository.save(cliente);
@@ -71,9 +71,9 @@ public class ClienteController {
 
 			Cliente cliente = new Cliente();
 			cliente.setIdCliente(request.getIdCliente());
-			cliente.setNome(request.getNome());
-			cliente.setEmail(request.getEmail());
-			cliente.setCpf(request.getCpf());
+			cliente.setNome(request.getNome().trim());
+			cliente.setEmail(request.getEmail().trim());
+			cliente.setCpf(request.getCpf().trim());
 			
 
 			clienteRepository.save(cliente);

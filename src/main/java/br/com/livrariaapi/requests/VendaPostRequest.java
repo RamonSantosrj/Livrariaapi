@@ -18,9 +18,9 @@ import lombok.ToString;
 @ToString
 public class VendaPostRequest {
 
-	ClientePostRequest clientePostRequest;
-	FuncionarioPostRequest funcionarioPostRequest;
-	List<LivroPostRequest> listLivro;
+	ClienteVendaPostRequest clientePostRequest;
+	FuncionarioVendaPostRequest funcionarioPostRequest;
+	List<LivroVendaPostRequest> listLivro;
 	private String data;
 	private String hora;
 }

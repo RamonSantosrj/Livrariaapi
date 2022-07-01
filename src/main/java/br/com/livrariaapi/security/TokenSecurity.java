@@ -17,14 +17,14 @@ public class TokenSecurity {
 	/*
 	 * Método utilizado para gerar o TOKEN
 	 */
-	public static String generateToken(String cpf) {
+	public static String generateToken(String email) {
 
 		// chave secreta para geração do TOKEN (Evitar falsificações)
 		String secretKey = JwtSecurity.SECRET;
 
 		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
 
-		String token = Jwts.builder().setId("livrariaapi").setSubject(cpf)
+		String token = Jwts.builder().setId("livrariaapi").setSubject(email)
 				.claim("authorities",
 						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
 				.setIssuedAt(new Date(System.currentTimeMillis()))

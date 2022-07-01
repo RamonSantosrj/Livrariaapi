@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class ClientePostRequest {
  
-	private long idCliente;
+
 	private String nome;
 	private String email;
 	private String cpf;

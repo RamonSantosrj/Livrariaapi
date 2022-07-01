@@ -30,12 +30,12 @@ public class LoginController {
 
 		try {
 			
-			Usuario usuario = usuarioRepository.findByEmailAndSenha(request.getEmail(), MD5Helper.encrypt(request.getSenha()));
+			Usuario usuario = usuarioRepository.findByEmailAndSenha(request.getEmail().trim(), MD5Helper.encrypt(request.getSenha().trim()));
 
 			if (usuario == null)
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso negado. Email e senha inválidos.");
 
-			String token = TokenSecurity.generateToken(usuario.getEmail());
+			String token = TokenSecurity.generateToken(usuario.getEmail().trim());
 
 			return ResponseEntity.status(HttpStatus.OK).body(token);
 		} catch (Exception e) {
