@@ -11,9 +11,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FindCpfTokenHelper {
+public class FindEmailTokenHelper {
 
-	public static String findCpfToken(HttpServletResponse request) {
+	public static String findEmailToken(HttpServletResponse request) {
 		
 		String accessToken = request.getHeader("Authorization").replace("Bearer", "").trim();
 		String cpf = TokenSecurity.getLoginFromToken(accessToken);

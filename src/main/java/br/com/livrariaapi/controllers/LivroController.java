@@ -1,5 +1,6 @@
 package br.com.livrariaapi.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ import br.com.livrariaapi.entities.Livro;
 import br.com.livrariaapi.repositories.ILivroRepository;
 import br.com.livrariaapi.requests.LivroPostRequest;
 import br.com.livrariaapi.requests.LivroPutRequest;
+import br.com.livrariaapi.response.LivroGetResponse;
 import io.swagger.annotations.ApiOperation;
 
 @Transactional
@@ -85,17 +87,27 @@ public class LivroController {
 
 	@ApiOperation("Metodo para pegar todos os livros Cadastrados")
 	@RequestMapping(value = ENDPOINT, method = RequestMethod.GET)
-	public ResponseEntity<List<Livro>> getAll() {
-		List<Livro> livros = null;
+	public ResponseEntity<List<LivroGetResponse>> getAll() {
+	
 		
 		try {
-			livros = (List<Livro>) livroRepository.findAll();
+			List<Livro> livros = (List<Livro>) livroRepository.findAll();
 			
 			if(livros.isEmpty()) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 			}
 			
-			return ResponseEntity.status(HttpStatus.OK).body(livros);
+			List<LivroGetResponse> listaLivro = new ArrayList<LivroGetResponse>();
+			LivroGetResponse livroResponse;
+			for(Livro livro : livros) {
+				livroResponse = new LivroGetResponse();
+				livroResponse.setIdLivro(livro.getIdLivro());
+				livroResponse.setNome(livro.getNome());
+				livroResponse.setAutor(livro.getAutor());
+				livroResponse.setPreco(livro.getPreco());
+				listaLivro.add(livroResponse);
+			}
+			return ResponseEntity.status(HttpStatus.OK).body(listaLivro);
 			
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -105,7 +117,7 @@ public class LivroController {
 
 	@ApiOperation("Realizar consulta de um livro pelo id")
 	@RequestMapping(value = ENDPOINT + "{idLivro}", method = RequestMethod.GET)
-	public ResponseEntity<Livro> getById(@PathVariable("idLivro") Long idLivro) {
+	public ResponseEntity<LivroGetResponse> getById(@PathVariable("idLivro") Long idLivro) {
 		Livro livro = null;
 		
 		
@@ -114,11 +126,16 @@ public class LivroController {
 			Optional<Livro> consult = livroRepository.findById(idLivro);
 			if(consult.isPresent()) {
 				livro = consult.get();
-				return ResponseEntity.status(HttpStatus.OK).body(livro);
+				LivroGetResponse livroResponse = new LivroGetResponse();
+				livroResponse.setIdLivro(livro.getIdLivro());
+				livroResponse.setNome(livro.getNome());
+				livroResponse.setAutor(livro.getAutor());
+				livroResponse.setPreco(livro.getPreco());
+				
+				return ResponseEntity.status(HttpStatus.OK).body(livroResponse);
 			}
 			
-			
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}

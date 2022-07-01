@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.com.livrariaapi.Helpers.CalcularVendaHelper;
-import br.com.livrariaapi.Helpers.FindCpfTokenHelper;
+import br.com.livrariaapi.Helpers.FindEmailTokenHelper;
 import br.com.livrariaapi.entities.Cliente;
 import br.com.livrariaapi.entities.Funcionario;
 import br.com.livrariaapi.entities.Livro;
@@ -126,7 +126,7 @@ public class VendaController {
 				vendaGetResponse.setEmailFuncionario(venda.getFuncionario().getEmail());
 				vendaGetResponse.setDataHora(new SimpleDateFormat("dd/MM/yyyy HH:MM").format(venda.getDataHora()));
 				vendaGetResponse.setPrecoVenda(venda.getPreco());
-				vendaGetResponse.setLivros(venda.getLivros());
+//				vendaGetResponse.setLivros(venda.getLivros());
 
 				lista.add(vendaGetResponse);
 			}

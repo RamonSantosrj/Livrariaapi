@@ -23,7 +23,7 @@ public class VendaGetResponse {
 	private String nomeCliente;
 	private String emailCliente;
 	private double precoVenda;
-	private List<Livro> livros;
+	private List<LivroGetResponse> livros;
 	
 	
 

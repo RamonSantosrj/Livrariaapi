@@ -1,5 +1,6 @@
 package br.com.livrariaapi.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ import br.com.livrariaapi.entities.Funcionario;
 import br.com.livrariaapi.repositories.IFuncionarioRepository;
 import br.com.livrariaapi.requests.FuncionarioPostRequest;
 import br.com.livrariaapi.requests.FuncionarioPutRequest;
+import br.com.livrariaapi.response.FuncionarioGetResponse;
 import io.swagger.annotations.ApiOperation;
 
 
@@ -84,13 +86,23 @@ public class FuncionarioController {
 
 	@ApiOperation("Metodo para realizar cadastro de Funcionario")
 	@RequestMapping(value = ENDPOINT, method = RequestMethod.GET)
-	public ResponseEntity<Funcionario> getAll() {
-		Funcionario funcionario = null;
+	public ResponseEntity<List<FuncionarioGetResponse>> getAll() {
+		
 
 		try {
 			List<Funcionario> funcionarios = (List<Funcionario>) funcionarioRepository.findAll();
-
-			return ResponseEntity.status(HttpStatus.OK).body(funcionario);
+			List<FuncionarioGetResponse>listaFuncionarios = new ArrayList<FuncionarioGetResponse>();
+			FuncionarioGetResponse funcionarioResponse;
+			for(Funcionario funcionario : funcionarios) {
+				funcionarioResponse = new FuncionarioGetResponse();
+				funcionarioResponse.setIdFuncionario(funcionario.getIdFuncionario());
+				funcionarioResponse.setNomeString(funcionario.getNome());
+				funcionarioResponse.setEmail(funcionario.getEmail());
+				funcionarioResponse.setCpf(funcionario.getCpf());
+				listaFuncionarios.add(funcionarioResponse);
+			}
+			
+			return ResponseEntity.status(HttpStatus.OK).body(listaFuncionarios);
 
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -99,7 +111,7 @@ public class FuncionarioController {
 
 	@ApiOperation("Metodo para realizar cadastro de Funcionario")
 	@RequestMapping(value = ENDPOINT + "{idFuncionario}", method = RequestMethod.GET)
-	public ResponseEntity<Funcionario> getById(@PathVariable("idFuncionario") Long idFuncionario) {
+	public ResponseEntity<FuncionarioGetResponse> getById(@PathVariable("idFuncionario") Long idFuncionario) {
 		Funcionario funcionario = null;
 
 		try {
@@ -109,8 +121,13 @@ public class FuncionarioController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 
 			funcionario = consult.get();
+			FuncionarioGetResponse funcionarioResponse = new FuncionarioGetResponse();
+			funcionarioResponse.setIdFuncionario(funcionario.getIdFuncionario());
+			funcionarioResponse.setNomeString(funcionario.getNome());
+			funcionarioResponse.setEmail(funcionario.getEmail());
+			funcionarioResponse.setCpf(funcionario.getCpf());
 
-			return ResponseEntity.status(HttpStatus.OK).body(funcionario);
+			return ResponseEntity.status(HttpStatus.OK).body(funcionarioResponse);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
@@ -127,7 +144,7 @@ public class FuncionarioController {
 			if (consult.isEmpty())
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possivel deletar Funcionario");
 
-			Funcionario funcionario = new Funcionario();
+			Funcionario funcionario = consult.get();
 			
 			funcionarioRepository.delete(funcionario);
 			
