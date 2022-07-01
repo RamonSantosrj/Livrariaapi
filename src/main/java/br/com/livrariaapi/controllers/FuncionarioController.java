@@ -22,7 +22,6 @@ import br.com.livrariaapi.requests.FuncionarioPutRequest;
 import br.com.livrariaapi.response.FuncionarioGetResponse;
 import io.swagger.annotations.ApiOperation;
 
-
 @Transactional
 @Controller
 public class FuncionarioController {
@@ -47,7 +46,6 @@ public class FuncionarioController {
 			funcionario.setNome(request.getNome().trim());
 			funcionario.setEmail(request.getEmail().trim());
 			funcionario.setCpf(request.getCpf().trim());
-	
 
 			funcionarioRepository.save(funcionario);
 
@@ -87,13 +85,16 @@ public class FuncionarioController {
 	@ApiOperation("Metodo para realizar cadastro de Funcionario")
 	@RequestMapping(value = ENDPOINT, method = RequestMethod.GET)
 	public ResponseEntity<List<FuncionarioGetResponse>> getAll() {
-		
 
 		try {
 			List<Funcionario> funcionarios = (List<Funcionario>) funcionarioRepository.findAll();
-			List<FuncionarioGetResponse>listaFuncionarios = new ArrayList<FuncionarioGetResponse>();
+
+			if (funcionarios.isEmpty())
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+
+			List<FuncionarioGetResponse> listaFuncionarios = new ArrayList<FuncionarioGetResponse>();
 			FuncionarioGetResponse funcionarioResponse;
-			for(Funcionario funcionario : funcionarios) {
+			for (Funcionario funcionario : funcionarios) {
 				funcionarioResponse = new FuncionarioGetResponse();
 				funcionarioResponse.setIdFuncionario(funcionario.getIdFuncionario());
 				funcionarioResponse.setNomeString(funcionario.getNome());
@@ -101,7 +102,7 @@ public class FuncionarioController {
 				funcionarioResponse.setCpf(funcionario.getCpf());
 				listaFuncionarios.add(funcionarioResponse);
 			}
-			
+
 			return ResponseEntity.status(HttpStatus.OK).body(listaFuncionarios);
 
 		} catch (Exception e) {
@@ -138,22 +139,21 @@ public class FuncionarioController {
 	@RequestMapping(value = ENDPOINT + "{idFuncionario}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> delete(@PathVariable("idFuncionario") Long idFuncionario) {
 		try {
-			
+
 			Optional<Funcionario> consult = funcionarioRepository.findById(idFuncionario);
 
 			if (consult.isEmpty())
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possivel deletar Funcionario");
 
 			Funcionario funcionario = consult.get();
-			
+
 			funcionarioRepository.delete(funcionario);
-			
+
 			return ResponseEntity.status(HttpStatus.OK).body("funcionario deletado com sucesso!");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
-		
-		
+
 	}
 
 }

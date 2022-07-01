@@ -137,6 +137,10 @@ public class ClienteController {
 
 		try {
 			List<Cliente> clientes = (List<Cliente>) clienteRepository.findAll();
+			
+			if(clientes.isEmpty())
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+			
 			List<ClienteGetResponse> listaClientes = new ArrayList<ClienteGetResponse>();
 			ClienteGetResponse clienteGetResponse;
 			for(Cliente cliente: clientes) {
