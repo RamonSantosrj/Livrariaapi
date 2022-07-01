@@ -1,0 +1,7 @@
+A ideia é que 1 venda seja vinculado a 1 cliente, a 1 funcionario, e a muitos livros.
+
+O cliente possa fazer muitas vendas e venda possa ter 1 cliente entao o relacionamento de cliente para venda e de 1 para * 
+
+Funcionario possa ter muitas vendas e uma venda so possa ter 1 funcionario, entao o relacionamento de 1 para *.
+
+Livros pode ter muitas vendas e venda pode vender muitos livros, entao o relacionamento e de * para * 
