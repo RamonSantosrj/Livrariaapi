@@ -59,7 +59,7 @@ public class ClienteController {
 		}
 	}
 
-	@ApiOperation("metodo para realizar cadastro de Funcionario")
+	@ApiOperation("metodo para alterar um cliente de Funcionario")
 	@RequestMapping(value = ENDPOINT, method = RequestMethod.PUT)
 	public ResponseEntity<String> put(@RequestBody ClientePutRequest request) {
 
@@ -87,7 +87,7 @@ public class ClienteController {
 		}
 	}
 
-	@ApiOperation("metodo para deletar Cliente")
+	@ApiOperation("metodo para deletar Cliente pelo id")
 	@RequestMapping(value = ENDPOINT + "{idCliente}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> delete(@PathVariable("idCliente") Long idCliente) {
 

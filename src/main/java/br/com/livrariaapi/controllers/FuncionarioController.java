@@ -56,7 +56,7 @@ public class FuncionarioController {
 
 	}
 
-	@ApiOperation("Metodo para realizar cadastro de Funcionario")
+	@ApiOperation("Metodo para alterar de Funcionario")
 	@RequestMapping(value = ENDPOINT, method = RequestMethod.PUT)
 	public ResponseEntity<String> put(@RequestBody FuncionarioPutRequest request) {
 
@@ -82,7 +82,7 @@ public class FuncionarioController {
 		}
 	}
 
-	@ApiOperation("Metodo para realizar cadastro de Funcionario")
+	@ApiOperation("Metodo para realizar a busca de todos Funcionario")
 	@RequestMapping(value = ENDPOINT, method = RequestMethod.GET)
 	public ResponseEntity<List<FuncionarioGetResponse>> getAll() {
 
@@ -110,7 +110,7 @@ public class FuncionarioController {
 		}
 	}
 
-	@ApiOperation("Metodo para realizar cadastro de Funcionario")
+	@ApiOperation("Metodo para buscar pelo id o Funcionario")
 	@RequestMapping(value = ENDPOINT + "{idFuncionario}", method = RequestMethod.GET)
 	public ResponseEntity<FuncionarioGetResponse> getById(@PathVariable("idFuncionario") Long idFuncionario) {
 		Funcionario funcionario = null;
@@ -135,7 +135,7 @@ public class FuncionarioController {
 
 	}
 
-	@ApiOperation("Metodo para realizar cadastro de Funcionario")
+	@ApiOperation("Metodo para deletar pelo id o Funcionario")
 	@RequestMapping(value = ENDPOINT + "{idFuncionario}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> delete(@PathVariable("idFuncionario") Long idFuncionario) {
 		try {

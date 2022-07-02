@@ -31,6 +31,7 @@ import br.com.livrariaapi.repositories.IVendaRepository;
 import br.com.livrariaapi.requests.LivroPostRequest;
 import br.com.livrariaapi.requests.LivroVendaPostRequest;
 import br.com.livrariaapi.requests.VendaPostRequest;
+import br.com.livrariaapi.response.LivroGetResponse;
 import br.com.livrariaapi.response.VendaGetResponse;
 import io.swagger.annotations.ApiOperation;
 
@@ -116,8 +117,10 @@ public class VendaController {
 
 			List<VendaGetResponse> lista = new ArrayList<VendaGetResponse>();
 			VendaGetResponse vendaGetResponse;
+			LivroGetResponse livroResponse;
+			List<LivroGetResponse> listaLivro;
 			for (Venda venda : vendaRepository.findbyCliente(cliente.getIdCliente())) {
-
+				listaLivro = new ArrayList<LivroGetResponse>();
 				vendaGetResponse = new VendaGetResponse();
 				vendaGetResponse.setIdVenda(venda.getIdVenda());
 				vendaGetResponse.setNomeCliente(venda.getCliente().getNome());
@@ -126,8 +129,17 @@ public class VendaController {
 				vendaGetResponse.setEmailFuncionario(venda.getFuncionario().getEmail());
 				vendaGetResponse.setDataHora(new SimpleDateFormat("dd/MM/yyyy HH:MM").format(venda.getDataHora()));
 				vendaGetResponse.setPrecoVenda(venda.getPreco());
-//				vendaGetResponse.setLivros(venda.getLivros());
-
+				
+				for(Livro livro : venda.getLivros()) {
+					livroResponse = new LivroGetResponse();
+					livroResponse.setIdLivro(livro.getIdLivro());
+					livroResponse.setNome(livro.getNome());
+					livroResponse.setAutor(livro.getAutor());
+					livroResponse.setPreco(livro.getPreco());
+					listaLivro.add(livroResponse);
+				}
+				vendaGetResponse.setLivros(listaLivro);
+				
 				lista.add(vendaGetResponse);
 			}
 
