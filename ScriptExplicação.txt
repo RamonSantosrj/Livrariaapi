@@ -1,0 +1,1 @@
+Somente necessario Criar o banco de dados, o resto utilizei apenas para me auxiliar no desenvolvimento.
